@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "172024144207",
+    "firebase_url": "https://plantbased-3639c.firebaseio.com",
+    "project_id": "plantbased-3639c",
+    "storage_bucket": "plantbased-3639c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172024144207:android:a6dfbc939c91934b",
+        "android_client_info": {
+          "package_name": "plant.michael.com.plantbased"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172024144207-pbt4mvnkj6h9esbktnbc0h5706thos74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVelUnx_j6V_CklIYOWupttrtEunfzpqw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
