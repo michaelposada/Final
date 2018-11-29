@@ -10,11 +10,9 @@ public class Plant {
     public String soil;
 
 
-    public Plant(String mPlantName, String mZone, String mEnviorment)
+    public Plant()
     {
-        this.plantName = mPlantName;
-        this.zone = mZone;
-        this.enviorment = mEnviorment;
+
     }
 
     public String getPlantName() {
