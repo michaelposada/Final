@@ -15,7 +15,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.UserHolder> 
 
     private List<Plant> mPlantList;
 
-    public PlantAdapter(ArrayList<Plant> plants) {
+    public PlantAdapter(List<Plant> plants) {
         mPlantList = plants;
     }
 

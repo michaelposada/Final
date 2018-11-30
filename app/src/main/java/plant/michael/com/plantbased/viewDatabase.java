@@ -33,10 +33,10 @@ public class viewDatabase extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
 
     mFirebaseDatabase = FirebaseDatabase.getInstance();
-    myRef = mFirebaseDatabase.getReference();
-    userID = user.getUid();
+    myRef = mFirebaseDatabase.getReference().child("plants");
+    //userID = user.getUid();
 
-    myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             showData(dataSnapshot);
@@ -51,19 +51,25 @@ public class viewDatabase extends AppCompatActivity {
     }
 
     private void showData(DataSnapshot dataSnapshot) {
+        ArrayList<Plant> plants = new ArrayList<Plant>();
+
+
         for(DataSnapshot ds : dataSnapshot.getChildren())
         {
             Plant plant  = new Plant();
-            plant.setPlantName(ds.child(userID).getValue(Plant.class).getPlantName());
-            plant.setEnviorment(ds.child(userID).getValue(Plant.class).getEnviorment());
-            plant.setZone(ds.child(userID).getValue(Plant.class).getZone());
+            plant.setPlantName((String)ds.getValue(Plant.class).getPlantName());
 
-            ArrayList<Plant> plants = new ArrayList<Plant>();
+            plant.setEnviorment(ds.getValue(Plant.class).getEnviorment());
+            plant.setZone(ds.getValue(Plant.class).getZone());
+            plants.add(plant);
 
-            PlantAdapter adapter = new PlantAdapter(plants);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(viewDatabase.this));
-            mRecyclerView.setAdapter(adapter);
+            System.out.print(plant.getPlantName());
+
         }
+        System.out.println(plants.size());
+        PlantAdapter adapter = new PlantAdapter(plants);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(viewDatabase.this));
+        mRecyclerView.setAdapter(adapter);
 
     }
 
