@@ -1,5 +1,7 @@
 package plant.michael.com.plantbased;
 
+import java.util.ArrayList;
+
 public class Plant {
 
     public String plantName;
@@ -8,11 +10,26 @@ public class Plant {
     public String h20Cycle;
     public String location;
     public String soil;
+    public  ArrayList<Plant> plants = new ArrayList<>();
 
 
     public Plant()
     {
 
+    }
+
+    public ArrayList<Plant> getplant()
+    {
+        System.out.println("Size is "+plants.size());
+        return plants;
+    }
+
+    public void setPlant(Plant plant)
+    {
+        plants.add(plant);
+        System.out.println(plants.size());
+        plant = plants.get(0);
+        System.out.println(plant.getPlantName());
     }
 
     public String getPlantName() {

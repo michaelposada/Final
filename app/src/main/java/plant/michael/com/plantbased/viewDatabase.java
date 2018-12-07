@@ -19,38 +19,139 @@ import java.util.ArrayList;
 public class viewDatabase extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+    private DatabaseReference myUser;
+    private DatabaseReference myUsername;
     private  RecyclerView mRecyclerView;
     private String userID;
     private FirebaseUser user;
+    public Plant Test = new Plant();
+    public static ArrayList<Plant> plants = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
         mRecyclerView = findViewById(R.id.recyclerView);
 
-    mFirebaseDatabase = FirebaseDatabase.getInstance();
-    myRef = mFirebaseDatabase.getReference().child("plants");
-    //userID = user.getUid();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        // I want to get the username of the perosn that logged in
+        //String username = login name here
+        myUsername = mFirebaseDatabase.getReference().child("User").child("michaelposada").child("plantID");
 
+        //Button ViewYourPlant;
+        //Button ViewAllPlants;
+        //Button AddPlants;
+        //This will be for clicking on  a button of List all Plants or Your plants
+
+
+        //ONCLICK EVENT FOR VIEWYOUPLANTS
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        myUsername.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //showAllData(dataSnapshot);
+                String data = dataSnapshot.getValue(String.class);
+                System.out.println(data);
+                data = data.replace(",","");
+
+                System.out.println(data.length());
+                for(int i=0; i<data.length(); i++) {
+                    myRef = mFirebaseDatabase.getReference().child("plants").child(String.valueOf(data.charAt(i)));
+
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            plants.add(showAllData(dataSnapshot));
+                            System.out.println("In the second onDataChange Method Plants Size is "+plants.size());
+                            System.out.println("Outside,at the end of bundle method " + plants.size());
+                            PlantAdapter adapter = new PlantAdapter(plants);
+                            mRecyclerView.setLayoutManager(new LinearLayoutManager(viewDatabase.this));
+                            mRecyclerView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF ON CLICK EVENT FOR VIEW ALL YOUR PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ON CLICK EVENT FOR VIEW ALL PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        myRef = mFirebaseDatabase.getReference().child("plants");
         myRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            showData(dataSnapshot);
-        }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showTable(dataSnapshot);
+            }
 
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        }
-    });
+            }
+        });
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF ON CLICK EVENT FOR VIEW ALL PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ON CLICK FOR ADDING PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+        //this should go to a new page to show it off the add features
+        myRef = mFirebaseDatabase.getReference().child("plants");
+        myRef.setValue(2); // I need to figure out how to tell where did we leave off in the database.
+        Plant plant = new Plant();
+        //Set the nessary data in the object, then place into the database
+        myRef.setValue(plant);
+        //Now we need to add a new Plant for the User
+        myRef = mFirebaseDatabase.getReference().child("User").child("//UserName Is Entered here").child("plantID");
+        myRef.setValue("//The number of plants that we called placed earlier");
+        //That should have updated the database. Need to be tested though
+
+
+
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END OF ON CLICK EVENT FOR ADDING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
+
+
+    private Plant showAllData(DataSnapshot dataSnapshot) {
+
+
+
+        DataSnapshot ds = dataSnapshot;
+
+        Plant plant  = new Plant();
+        plant.setEnviorment(ds.child("enviorment").getValue(String.class));
+
+        plant.setPlantName(ds.child("plantName").getValue(String.class));
+
+        plant.setZone(ds.child("zone").getValue(String.class));
+
+
+        return plant;
+        //Test.setPlant(plant);
+        //plants.add(plant);
+
+    }
+
+    private void showTable(DataSnapshot dataSnapshot) {
         ArrayList<Plant> plants = new ArrayList<Plant>();
 
 
@@ -63,7 +164,7 @@ public class viewDatabase extends AppCompatActivity {
             plant.setZone(ds.getValue(Plant.class).getZone());
             plants.add(plant);
 
-            System.out.print(plant.getPlantName());
+            //System.out.print(plant.getPlantName());
 
         }
         System.out.println(plants.size());
@@ -72,6 +173,8 @@ public class viewDatabase extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
     }
+
+
 
 
 }
