@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class viewDatabase extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
+    private DatabaseReference test;
     private DatabaseReference myUser;
     private DatabaseReference myUsername;
     private  RecyclerView mRecyclerView;
@@ -90,18 +91,18 @@ public class viewDatabase extends AppCompatActivity {
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ON CLICK EVENT FOR VIEW ALL PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        myRef = mFirebaseDatabase.getReference().child("plants");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showTable(dataSnapshot);
-            }
+        //myRef = mFirebaseDatabase.getReference().child("plants");
+        //myRef.addValueEventListener(new ValueEventListener() {
+           // @Override
+            //public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+             //   showTable(dataSnapshot);
+            //}
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            //@Override
+            //public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+           // }
+        //});
 
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF ON CLICK EVENT FOR VIEW ALL PLANTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -111,14 +112,23 @@ public class viewDatabase extends AppCompatActivity {
 
 
         //this should go to a new page to show it off the add features
-        myRef = mFirebaseDatabase.getReference().child("plants");
-        myRef.setValue(2); // I need to figure out how to tell where did we leave off in the database.
-        Plant plant = new Plant();
-        //Set the nessary data in the object, then place into the database
-        myRef.setValue(plant);
+
         //Now we need to add a new Plant for the User
-        myRef = mFirebaseDatabase.getReference().child("User").child("//UserName Is Entered here").child("plantID");
-        myRef.setValue("//The number of plants that we called placed earlier");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        test = mFirebaseDatabase.getReference().child("User").child("michaelposada").child("plantID");
+        test.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String value = dataSnapshot.getValue(String.class);
+                value = value + "," + "2";
+                test.setValue(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         //That should have updated the database. Need to be tested though
 
 
