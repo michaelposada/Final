@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,35 +50,9 @@ public class SinglePlant extends AppCompatActivity {
         pests = findViewById(R.id.textView12);
         funFact = findViewById(R.id.textview13);
         add = findViewById(R.id.fab);
-        BottomNavigationView ViewYourPlant = findViewById(R.id.navigation);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        ViewYourPlant.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()) {
-                    case R.id.action_my_plants:
-                        Intent i = new Intent(SinglePlant.this, myPlants.class);
-                        Intent j = getIntent();
-                        String user1 = j.getStringExtra("user");
-                        System.out.println("UserName is "+user1);
-                        i.putExtra("user",user1);
-                        startActivity(i);
-
-
-                    case R.id.action_all_plants:
-                        Intent t = new Intent(SinglePlant.this,viewDatabase.class);
-                        Intent l = getIntent();
-                        String user2 = l.getStringExtra("user");
-                        System.out.println("Username is "+user2);
-                        t.putExtra("user",user2);
-                        startActivity(t);
-
-                }
-                return true;
-            }
-        });
         for(int i =0; i<100; i++) {
             String t = String.valueOf(i);
 
