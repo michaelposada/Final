@@ -13,6 +13,7 @@ public class Plant {
     public String light;
     public String pests;
     public String funFact;
+    public String maintanence;
     public  ArrayList<Plant> plants = new ArrayList<>();
 
 
@@ -65,6 +66,8 @@ public class Plant {
 
     public String getFunFact() {return funFact;}
 
+    public String getMaintanence() {return maintanence;}
+
     public void setPlantName(String plantName) {
         this.plantName = plantName;
     }
@@ -99,5 +102,9 @@ public class Plant {
 
     public void setFunFact(String funFact) {
         this.funFact = funFact;
+    }
+
+    public void setMaintanence(String maintanence) {
+        this.maintanence = maintanence;
     }
 }

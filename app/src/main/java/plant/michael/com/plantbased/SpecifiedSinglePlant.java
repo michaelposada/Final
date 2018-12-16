@@ -27,10 +27,9 @@ public class SpecifiedSinglePlant extends AppCompatActivity {
     TextView plantName;
     TextView plantZone;
     TextView plantWatering;
-    TextView fertlize;
+    TextView maintanence;
     TextView light;
-    TextView pests;
-    TextView funFact;
+;
 
 
 
@@ -40,13 +39,10 @@ public class SpecifiedSinglePlant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.specific_plant_view);
         plantName = findViewById(R.id.plantName);
-        plantZone = findViewById(R.id.plantZone);
         plantWatering = findViewById(R.id.textView9);
-        fertlize = findViewById(R.id.textView10);
+        maintanence = findViewById(R.id.textView12);
         light = findViewById(R.id.textView11);
-        pests = findViewById(R.id.textView12);
-        funFact = findViewById(R.id.textview13);
-        BottomNavigationView ViewYourPlant = findViewById(R.id.navigation);
+
         System.out.println("IN SPECIFIED SINGLE PLANT!");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -65,32 +61,7 @@ public class SpecifiedSinglePlant extends AppCompatActivity {
                 }
             });
         }
-        ViewYourPlant.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()) {
-                    case R.id.action_my_plants:
-                        Intent i = new Intent(SpecifiedSinglePlant.this, myPlants.class);
-                        Intent j = getIntent();
-                        String user1 = j.getStringExtra("user");
-                        System.out.println("UserName is "+user1);
-                        i.putExtra("user",user1);
-                        startActivity(i);
-
-
-                    case R.id.action_all_plants:
-                        Intent t = new Intent(SpecifiedSinglePlant.this,viewDatabase.class);
-                        Intent l = getIntent();
-                        String user2 = l.getStringExtra("user");
-                        System.out.println("Username is "+user2);
-                        t.putExtra("user",user2);
-                        startActivity(t);
-
-                }
-                return true;
-            }
-        });
     }
 
     private void showTable(DataSnapshot dataSnapshot) {
@@ -112,18 +83,16 @@ public class SpecifiedSinglePlant extends AppCompatActivity {
         {
             System.out.println("Did i make it?");
             plantName.setText("Name: "+wanted);
-            plant.setZone(dataSnapshot.child("zone").getValue(String.class));
-            plantZone.setText("Zone: "+plant.getZone());
+
             plant.setH20Cycle(dataSnapshot.child("watering").getValue(String.class));
             plantWatering.setText("Water Cycle: "+plant.getH20Cycle());
-            plant.setSoil(dataSnapshot.child("fertilizing").getValue(String.class));
-            fertlize.setText("Soil Type: "+plant.getSoil());
+
             plant.setLight(dataSnapshot.child("light").getValue(String.class));
             light.setText("Lighting: "+plant.getLight());
             plant.setPests(dataSnapshot.child("pests").getValue(String.class));
-            pests.setText("Pests: "+plant.getPests());
-            plant.setFunFact(dataSnapshot.child("funfact").getValue(String.class));
-            funFact.setText("Fun Fact: "+plant.getFunFact());
+            plant.setMaintanence(dataSnapshot.child("maintanence").getValue(String.class));
+            maintanence.setText("Maintanence: "+plant.getMaintanence());
+
             //pests.setText((String)ds.getValue(Plant.class).getPests());
             //funFact.setText((String)ds.getValue(Plant.class).getFunFact());
         }

@@ -55,7 +55,32 @@ public class SinglePlant extends AppCompatActivity {
         BottomNavigationView ViewYourPlant = findViewById(R.id.navigation);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
+        ViewYourPlant.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                switch (item.getItemId()) {
+                    case R.id.action_my_plants:
+                        Intent i = new Intent(SinglePlant.this, myPlants.class);
+                        Intent j = getIntent();
+                        String user1 = j.getStringExtra("user");
+                        System.out.println("UserName is "+user1);
+                        i.putExtra("user",user1);
+                        startActivity(i);
+
+
+                    case R.id.action_all_plants:
+                        Intent t = new Intent(SinglePlant.this,viewDatabase.class);
+                        Intent l = getIntent();
+                        String user2 = l.getStringExtra("user");
+                        System.out.println("Username is "+user2);
+                        t.putExtra("user",user2);
+                        startActivity(t);
+
+                }
+                return true;
+            }
+        });
         for(int i =0; i<100; i++) {
             String t = String.valueOf(i);
 
@@ -83,6 +108,7 @@ public class SinglePlant extends AppCompatActivity {
                 // moving.putExtra("plant",plant);
 
 
+
                 mFirebaseDatabase = FirebaseDatabase.getInstance();
 
                 for(int i =0; i<100; i++) {
@@ -101,6 +127,7 @@ public class SinglePlant extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         String list = dataSnapshot.getValue(String.class);
                                         System.out.println(t);
+                                        System.out.println(list);
                                         if(list.contains(t))
                                         {
                                             Toast.makeText(SinglePlant.this,"You already Have That Plant",Toast.LENGTH_SHORT).show();
@@ -138,32 +165,7 @@ public class SinglePlant extends AppCompatActivity {
 
             }
         });
-        ViewYourPlant.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()) {
-                    case R.id.action_my_plants:
-                        Intent i = new Intent(SinglePlant.this, myPlants.class);
-                        Intent j = getIntent();
-                        String user1 = j.getStringExtra("user");
-                        System.out.println("UserName is "+user1);
-                        i.putExtra("user",user1);
-                        startActivity(i);
-
-
-                    case R.id.action_all_plants:
-                        Intent t = new Intent(SinglePlant.this,viewDatabase.class);
-                        Intent l = getIntent();
-                        String user2 = l.getStringExtra("user");
-                        System.out.println("Username is "+user2);
-                        t.putExtra("user",user2);
-                        startActivity(t);
-
-                }
-                return true;
-            }
-        });
     }
 
     private void showTable(DataSnapshot dataSnapshot) {
@@ -240,14 +242,6 @@ public class SinglePlant extends AppCompatActivity {
 
         }
 
-
-        //plant.setPlantName((String)ds.getValue(Plant.class).getPlantName());
-
-        //plant.setEnviorment(ds.getValue(Plant.class).getEnviorment());
-        //plant.setZone(ds.getValue(Plant.class).getZone());
-        //plants.add(plant);
-
-        //System.out.print(plant.getPlantName());
         return false;
     }
 

@@ -29,7 +29,7 @@ public  class SpecifiedRecyclerAdapter extends RecyclerView.Adapter<SpecifiedRec
 
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.view, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.recycler_row, parent, false);
         return new RecyclerViewHolder(v);
     }
 
@@ -37,7 +37,7 @@ public  class SpecifiedRecyclerAdapter extends RecyclerView.Adapter<SpecifiedRec
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
         Plant currentPlant= plant.get(position);
         holder.nameTextView.setText(currentPlant.getPlantName());
-        holder.zoneTextView.setText(currentPlant.getZone());
+
 
         holder.nameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +58,13 @@ public  class SpecifiedRecyclerAdapter extends RecyclerView.Adapter<SpecifiedRec
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView nameTextView,zoneTextView;
+        public TextView nameTextView;
         public String name = Name;
 
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            nameTextView =itemView.findViewById ( R.id.plantName);
-            zoneTextView = itemView.findViewById(R.id.plantZone);
+            nameTextView =itemView.findViewById ( R.id.nameTextView);
 
 
             itemView.setOnClickListener(this);
