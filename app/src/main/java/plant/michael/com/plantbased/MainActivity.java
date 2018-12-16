@@ -6,12 +6,22 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,47 +32,58 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-
-    Button  btnSignIn;
+    private boolean logged = false;
+    public TextView email;
+    public  TextView password;
+    public Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-
+        setContentView(R.layout.launch_page);
         mAuth = FirebaseAuth.getInstance();
-        final String email = "michaelposada@mail.adelphi.edu";
-        String pass = "123456";
+        email = (TextView) findViewById(R.id.Login);
+        password = findViewById(R.id.Password);
+        submit = findViewById(R.id.Submit);
 
-        mAuth.signInWithEmailAndPassword(email, pass);
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+            public void onClick(View v) {
+                final  String user = email.getText().toString();
+                String pass = password.getText().toString();
+                mAuth = FirebaseAuth.getInstance();
 
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid()); // prints out the tag for successful or not
-                } else {
-                    // User is signed out
-                    System.out.print("did not worked");
-                    Log.d(TAG, "onAuthStateChanged:signed_out"); // prints out if it fails or not.
+                System.out.println("Here");
 
-                }
-                // ...
+                mAuth.signInWithEmailAndPassword(user, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+
+                            Toast.makeText(MainActivity.this, "Login Worked",Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(MainActivity.this, viewDatabase.class);
+                            i.putExtra("user",user);
+                            startActivity(i);
+
+                        }
+                        else
+                            {
+                                Toast.makeText(MainActivity.this, "Login NO Worked",Toast.LENGTH_LONG).show();
+                            }
+                    }
+                });
+
+
             }
+        });
 
-        };
+
+
+
+
     }
 
-    // This is going to start when the app runs and when we call the listener. When buttons are in this will also be running in the background.
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
+
 
 }

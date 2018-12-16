@@ -10,6 +10,9 @@ public class Plant {
     public String h20Cycle;
     public String location;
     public String soil;
+    public String light;
+    public String pests;
+    public String funFact;
     public  ArrayList<Plant> plants = new ArrayList<>();
 
 
@@ -56,6 +59,12 @@ public class Plant {
         return soil;
     }
 
+    public String getLight() {return light;}
+
+    public String getPests() {return pests;}
+
+    public String getFunFact() {return funFact;}
+
     public void setPlantName(String plantName) {
         this.plantName = plantName;
     }
@@ -68,5 +77,27 @@ public class Plant {
         this.enviorment = enviorment;
     }
 
+    public void setH20Cycle(String h20Cycle) {
+        this.h20Cycle = h20Cycle;
+        }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setLight(String light) {
+        this.light = light;
+    }
+
+    public void setPests(String pests) {
+        this.pests = pests;
+    }
+
+    public void setSoil(String soil) {
+        this.soil = soil;
+    }
+
+    public void setFunFact(String funFact) {
+        this.funFact = funFact;
+    }
 }

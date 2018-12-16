@@ -54,4 +54,29 @@
          from https://console.developers.google.com/ -->
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
 
+    <!-- NAVBAR -->
+    <string name="my_plants">My Plants</string>
+    <string name="all_plants">All Plants</string>
+
+    <!-- BUTTONS -->
+    <string name="submit">submit</string>
+
+    <!-- IMAGE ALTS -->
+    <string name="spider_image">Spider Plant</string>
+
+    <!-- launch page strings -->
+    <string name="welcome_to">Welcome to</string>
+    <string name="plantbase">Plantbase</string>
+    <string name="possobles_inc">possobles inc©</string>
+    <string name="logo">logo</string>
+
+    <!-- item view strings -->
+    <string name="plant_species">PLANT SPECIES</string>
+    <string name="planting">Planting:</string>
+    <string name="fertilizing">Fertilizing:</string>
+    <string name="fun_fact">Fun Fact:</string>
+    <string name="watering">Watering:</string>
+    <string name="light">Light:</string>
+    <string name="pests_diseases">Pests/Diseases:</string>
+    <string name="email_address">Email Address</string>
 </resources>

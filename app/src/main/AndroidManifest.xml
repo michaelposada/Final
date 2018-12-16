@@ -9,13 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewDatabase">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".viewDatabase">
+        </activity>>
+        <activity android:name=".myPlants">
+        </activity>
+        <activity android:name=".SinglePlant"></activity>
+        <activity android:name=".SpecifiedSinglePlant"></activity>
+        <activity android:name=".AddPlant"></activity>
     </application>
 
 </manifest>
